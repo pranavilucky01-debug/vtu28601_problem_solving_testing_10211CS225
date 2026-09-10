@@ -1,0 +1,23 @@
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+        int total = 0;
+        int maxSum = nums[0], curMax = nums[0];
+        int minSum = nums[0], curMin = nums[0];
+
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            total += num;
+
+            curMax = Math.max(num, curMax + num);
+            maxSum = Math.max(maxSum, curMax);
+
+            curMin = Math.min(num, curMin + num);
+            minSum = Math.min(minSum, curMin);
+        }
+
+        // If all numbers are negative, maxSum is the answer
+        if (maxSum < 0) return maxSum;
+
+        return Math.max(maxSum, total - minSum);
+    }
+}
