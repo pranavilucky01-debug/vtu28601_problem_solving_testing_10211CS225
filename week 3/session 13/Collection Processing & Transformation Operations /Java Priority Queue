@@ -1,0 +1,61 @@
+import java.util.*;
+
+class Student {
+    private int id;
+    private String name;
+    private double cgpa;
+
+    public Student(int id, String name, double cgpa) {
+        this.id = id;
+        this.name = name;
+        this.cgpa = cgpa;
+    }
+
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public double getCgpa() { return cgpa; }
+}
+
+class StudentComparator implements Comparator<Student> {
+    @Override
+    public int compare(Student s1, Student s2) {
+        if (Double.compare(s2.getCgpa(), s1.getCgpa()) != 0) {
+            return Double.compare(s2.getCgpa(), s1.getCgpa()); // higher CGPA first
+        } else if (!s1.getName().equals(s2.getName())) {
+            return s1.getName().compareTo(s2.getName()); // lexicographically smaller name
+        } else {
+            return Integer.compare(s1.getId(), s2.getId()); // smaller ID
+        }
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int totalEvents = Integer.parseInt(sc.nextLine());
+
+        PriorityQueue<Student> pq = new PriorityQueue<>(new StudentComparator());
+
+        while (totalEvents-- > 0) {
+            String[] parts = sc.nextLine().split(" ");
+            String command = parts[0];
+
+            if (command.equals("ENTER")) {
+                String name = parts[1];
+                double cgpa = Double.parseDouble(parts[2]);
+                int id = Integer.parseInt(parts[3]);
+                pq.add(new Student(id, name, cgpa));
+            } else if (command.equals("SERVED")) {
+                pq.poll();
+            }
+        }
+
+        if (pq.isEmpty()) {
+            System.out.println("EMPTY");
+        } else {
+            while (!pq.isEmpty()) {
+                System.out.println(pq.poll().getName());
+            }
+        }
+    }
+}
