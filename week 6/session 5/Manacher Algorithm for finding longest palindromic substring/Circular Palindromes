@@ -1,0 +1,55 @@
+import java.util.*;
+
+public class Solution {
+
+    // Find longest palindromic substring length
+    static int longestPalindrome(String s) {
+        int max = 1;
+
+        for (int i = 0; i < s.length(); i++) {
+
+            // Odd length palindrome
+            int left = i, right = i;
+
+            while (left >= 0 && right < s.length()
+                    && s.charAt(left) == s.charAt(right)) {
+                max = Math.max(max, right - left + 1);
+                left--;
+                right++;
+            }
+
+            // Even length palindrome
+            left = i;
+            right = i + 1;
+
+            while (left >= 0 && right < s.length()
+                    && s.charAt(left) == s.charAt(right)) {
+                max = Math.max(max, right - left + 1);
+                left--;
+                right++;
+            }
+        }
+
+        return max;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        String s = sc.next();
+
+        for (int k = 0; k < n; k++) {
+
+            // Create rotation
+            String rotation = s.substring(k) + s.substring(0, k);
+
+            // Find longest palindrome
+            int answer = longestPalindrome(rotation);
+
+            System.out.println(answer);
+        }
+
+        sc.close();
+    }
+}
