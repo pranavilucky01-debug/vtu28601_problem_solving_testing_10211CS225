@@ -1,0 +1,27 @@
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int q = sc.nextInt(); // number of test cases
+        while (q-- > 0) {
+            String s1 = sc.next();
+            String s2 = sc.next();
+            System.out.println(hasCommonSubstring(s1, s2) ? "YES" : "NO");
+        }
+        sc.close();
+    }
+
+    private static boolean hasCommonSubstring(String s1, String s2) {
+        Set<Character> set = new HashSet<>();
+        for (char c : s1.toCharArray()) {
+            set.add(c);
+        }
+        for (char c : s2.toCharArray()) {
+            if (set.contains(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
